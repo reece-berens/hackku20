@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+import json
+
 from garage.models import Vehicle, Garage, GaragePass, GateCheck
 
 from django.views.decorators.csrf import csrf_exempt
@@ -136,3 +138,17 @@ def gateCheck(request):
         return HttpResponse(status=200, content="Car checked in")
 
     return HttpResponse(status=400, content="Bad in/out and car combo")
+
+def getOpenSpaces(request):
+    location = request.GET.get("streetLocation")
+    garage = Garage.objects.filter(streetLocation=location).latest('garageID')
+    if (garage is None):
+        return HttpResponse(status=400, content="Garage does not exist")
+    return HttpResponse(status=200, content=garage.openSpaces)
+
+def showAllGarages(request):
+    garageList = Garage.objects.all()
+    dictionary = {}
+    for garage in garageList:
+        dictionary[garage.streetLocation] = garage.openSpaces
+    return HttpResponse(status=200, content=json.dumps(dictionary), content_type="application/json")

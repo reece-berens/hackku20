@@ -8,4 +8,6 @@ urlpatterns = [
     path('addVehicle', views.addVehicle),
     path('addGaragePass', views.addGaragePass),
     path('gateCheck', views.gateCheck),
+    path('getOpenSpaces', views.getOpenSpaces),
+    path('allGarages', views.showAllGarages)
 ]

@@ -30,6 +30,9 @@ def addVehicle(request):
     tempVehicle.licensePlate = plate
     tempVehicle.licensePlateState = state
     tempVehicle.vin = vin
+
+    tempVehicle.vehicleID = Vehicle.objects.all().count() + 1
+
     tempVehicle.save()
     return HttpResponse(status=200, content="Vehicle added")
 
@@ -49,22 +52,25 @@ def addGarage(request):
     tempGarage.openSpaces = spacesInt
     tempGarage.streetLocation = location
 
+    tempGarage.garageID = Garage.objects.all().count() + 1
+
     tempGarage.save()
     return HttpResponse(status=200, content="Garage added")
 
 @csrf_exempt
 def addGaragePass(request):
     vin = request.GET.get("vin")
-    assocVehicle = Vehicle.objects.filter(vin=vin).latest('vehicleID')
+    assocVehicle = Vehicle.objects.filter(vin=vin).latest('vehicleID') ############### ID CHANGED
     if (assocVehicle is None):
         return HttpResponse(status=400, content="Vehicle not found")
     print(assocVehicle)
-    passExists = GaragePass.objects.filter(vehicleID=assocVehicle.vehicleID).count()
+    passExists = GaragePass.objects.filter(vehicleID=assocVehicle.vehicleID).count() ################# ID CHANGED
     if (passExists == 1):
         return HttpResponse(status=400, content="Pass given for this vehicle")
     print("Creating garage pass")
     garagePass = GaragePass()
     garagePass.vehicleID = assocVehicle
+    garagePass.passID = GaragePass.objects.all().count() + 1
     garagePass.save()
     return HttpResponse(status=200, content="Garage pass added")
 
@@ -95,8 +101,9 @@ def gateCheck(request):
     print(recentCheck)
     if (recentCheck == 0):
         tempGateCheck = GateCheck()
-        tempGateCheck.checkedGarageID = Garage.objects.get(garageID=garageIDint)
-        tempGateCheck.checkedPassID = GaragePass.objects.get(passID=passIDint)
+        tempGateCheck.checkedGarageID = Garage.objects.get(garageID=garageIDint) ######################## ID CHANGED
+        tempGateCheck.checkedPassID = GaragePass.objects.get(passID=passIDint) ########################### ID CHANGED
+        tempGateCheck.checkID = GateCheck.objects.all().count() + 1
         tempGateCheck.inOrOut = "In"
         tempGateCheck.save()
 
@@ -104,13 +111,14 @@ def gateCheck(request):
         tempGarage.save()
         return HttpResponse(status=200, content="Car checked in")
 
-    recentCheck = GateCheck.objects.filter(checkedGarageID=garageID).filter(checkedPassID=passID).latest('checkID')
+    recentCheck = GateCheck.objects.filter(checkedGarageID=garageID).filter(checkedPassID=passID).latest('checkID') ############### ID CHANGED
     print(recentCheck)
     print(recentCheck.inOrOut)
     if (recentCheck == None and status == "In"):
         tempGateCheck = GateCheck()
-        tempGateCheck.checkedGarageID = Garage.objects.get(garageID=garageIDint)
-        tempGateCheck.checkedPassID = GaragePass.objects.get(passID=passIDint)
+        tempGateCheck.checkedGarageID = Garage.objects.get(garageID=garageIDint) #################### ID CHANGED
+        tempGateCheck.checkedPassID = GaragePass.objects.get(passID=passIDint) ######################## ID CHANGED
+        tempGateCheck.checkID = GateCheck.objects.all().count() + 1
         tempGateCheck.inOrOut = "In"
         tempGateCheck.save()
 
@@ -120,8 +128,9 @@ def gateCheck(request):
 
     if (recentCheck.inOrOut == "In" and status == "Out"):
         tempGateCheck = GateCheck()
-        tempGateCheck.checkedGarageID = Garage.objects.get(garageID=garageIDint)
-        tempGateCheck.checkedPassID = GaragePass.objects.get(passID=passIDint)
+        tempGateCheck.checkedGarageID = Garage.objects.get(garageID=garageIDint) #################### ID CHANGED
+        tempGateCheck.checkedPassID = GaragePass.objects.get(passID=passIDint) #################### ID CHANGED
+        tempGateCheck.checkID = GateCheck.objects.all().count() + 1
         tempGateCheck.inOrOut = "Out"
         tempGateCheck.save()
 
@@ -131,8 +140,9 @@ def gateCheck(request):
 
     if (recentCheck.inOrOut == "Out" and status == "In"):
         tempGateCheck = GateCheck()
-        tempGateCheck.checkedGarageID = Garage.objects.get(garageID=garageIDint)
-        tempGateCheck.checkedPassID = GaragePass.objects.get(passID=passIDint)
+        tempGateCheck.checkedGarageID = Garage.objects.get(garageID=garageIDint) ###################### ID CHANGED
+        tempGateCheck.checkedPassID = GaragePass.objects.get(passID=passIDint) ################## ID CHANGED
+        tempGateCheck.checkID = GateCheck.objects.all().count() + 1
         tempGateCheck.inOrOut = "In"
         tempGateCheck.save()
 
@@ -144,7 +154,7 @@ def gateCheck(request):
 
 def getOpenSpaces(request):
     location = request.GET.get("streetLocation")
-    garage = Garage.objects.filter(streetLocation=location).latest('garageID')
+    garage = Garage.objects.filter(streetLocation=location).latest('garageID') ############## ID CHANGED
     if (garage is None):
         return HttpResponse(status=400, content="Garage does not exist")
     return HttpResponse(status=200, content=garage.openSpaces)

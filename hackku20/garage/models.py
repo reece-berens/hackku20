@@ -9,17 +9,22 @@ class Vehicle(models.Model):
     licensePlateState = models.CharField(default="", choices=statesList, max_length=40)
     vin = models.CharField(default="", max_length=17)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['licensePlate', 'licensePlateState', 'vin'], name='Unique vehicle')
+        ]
+
 class Garage(models.Model):
     garageID = models.IntegerField(primary_key=True)
     openSpaces = models.IntegerField(default=100)
     streetLocation = models.CharField(default="", max_length=200, unique=True)
 
 class GaragePass(models.Model):
-    passID = models.BigIntegerField(primary_key=True)
+    passID = models.IntegerField(primary_key=True)
     vehicleID = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
 
 class GateCheck(models.Model):
-    checkID = models.BigIntegerField(primary_key=True)
+    checkID = models.IntegerField(primary_key=True)
     checkedGarageID = models.ForeignKey(Garage, on_delete=models.CASCADE)
     checkedPassID = models.ForeignKey(GaragePass, on_delete=models.CASCADE)
     inOrOut = models.CharField(default="", choices=(("In", "In"), ("Out", "Out")), max_length=3)

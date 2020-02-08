@@ -9,6 +9,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
+def test(request):
+    return HttpResponse(status=200, content="Test for Nathan")
+
 @csrf_exempt
 def addVehicle(request):
     plate = request.GET.get("plate")
@@ -153,5 +156,5 @@ def showAllGarages(request):
         dictionary[garage.streetLocation] = garage.openSpaces
     return HttpResponse(status=200, content=json.dumps(dictionary), content_type="application/json")
 
-def adminPage(request):
-    return render(request, 'adminPage.html')
+def landingPage(request):
+    return render(request, 'landing.html')

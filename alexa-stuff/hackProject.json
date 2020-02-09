@@ -1,0 +1,109 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "hack project",
+            "intents": [
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": [
+                        "cancel hello world"
+                    ]
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": [
+                        "what can I do",
+                        "what do I do",
+                        "please help",
+                        "help me",
+                        "help"
+                    ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": [
+                        "goodbye",
+                        "no more",
+                        "stop please",
+                        "stop",
+                        "stop hello world"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "helloWorld",
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "AMAZON.FirstName"
+                        }
+                    ],
+                    "samples": [
+                        "hi",
+                        "hello",
+                        "tell {name} hello",
+                        "tell {name} hi",
+                        "hi {name}",
+                        "say hi to {name}",
+                        "say hello to {name}",
+                        "say hello world",
+                        "say hi world",
+                        "say hello",
+                        "say hi"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NoIntent",
+                    "samples": []
+                },
+                {
+                    "name": "parkingIntent",
+                    "slots": [
+                        {
+                            "name": "street",
+                            "type": "AMAZON.PostalAddress"
+                        }
+                    ],
+                    "samples": [
+                        "tell me all parking information",
+                        "tell me all parking",
+                        "give me all parking information",
+                        "give me all parking",
+                        "get me all parking",
+                        "get me all parking information",
+                        "give me parking at {street}",
+                        "tell me about parking at {street}",
+                        "give me parking information at {street}",
+                        "parking information at {street}",
+                        "how many spots are available at {street}",
+                        "get me parking information at {street}",
+                        "get me parking garage information",
+                        "give me parking garage information",
+                        "give parking information",
+                        "get me parking information",
+                        "get me parking",
+                        "parking",
+                        "parking information",
+                        "give me parking information"
+                    ]
+                },
+                {
+                    "name": "ChuckNorrisIntent",
+                    "slots": [],
+                    "samples": [
+                        "tell me about Chuck Norris",
+                        "give me a Chuck Norris fact"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}
